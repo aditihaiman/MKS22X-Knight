@@ -21,9 +21,9 @@ public class KnightBoard{
     String output = "";
     for (int x = 0; x < rows; x++) {
       for (int y = 0; y < cols; y++) {
-        //if (board[x][y] < 0) output+=" 0";
-        if (board[x][y] / 10 == 0) output+= (" " + board[x][y]);
-        else output += board[x][y];
+        if (board[x][y] < 0) output+="  0";
+        else if (board[x][y] / 10 == 0) output+= ("  " + board[x][y]);
+        else output += " " + board[x][y];
       }
       output+="\n";
     }
@@ -38,23 +38,24 @@ public class KnightBoard{
     return 0;
   }
 
-  private boolean solveH(int row, int col, int num) {
+  public boolean solveH(int row, int col, int num) { //private
     if (num==row*col) return true;
     for (int x = row; x < rows; x++) {
       for (int y = col; y < cols; y++) {
-        board.placeKnight(x, y, num);
-        if(!canPlaceAnother(x, y).isEmpty()) return solveH()
+        placeKnight(x, y, num);
+        int[] temp = canPlaceAnother(x, y);
+        if(!empty(temp)) return solveH(temp[0], temp[1], num+1);
       }
     }
     return false;
   }
 
-  private boolean placeKnight(int row, int col, int num) {
+  public boolean placeKnight(int row, int col, int num) { //private
     board[row][col] = num;
     return true;
   }
 
-  private static int[] canPlaceAnother(int x, int y){
+  public int[] canPlaceAnother(int x, int y){ //private
     int[] output = new int[2];
     for(int x1 = 0; x < rows; x++){
       for(int y1 = 0; y < cols; y++) {
@@ -64,6 +65,7 @@ public class KnightBoard{
             {
               output[0] = x1;
               output[1] = y1;
+              return output;
             }
         }
       }
@@ -71,9 +73,9 @@ public class KnightBoard{
     return output;
   }
 
-  private boolean removeKnight(int row, int col, int num){return true;}
+  public boolean removeKnight(int row, int col, int num){return true;} //private
 
-  private boolean empty(int[] input) {
+  public boolean empty(int[] input) { //private
     for(int x = 0; x < input.length; x++){
       if(input[x]!=0) return true;
     }
