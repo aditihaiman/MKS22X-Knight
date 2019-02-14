@@ -31,7 +31,12 @@ public class KnightBoard{
   }
 
   public boolean solve(int row, int col) {
-    return true;
+    KnightBoard brd = new KnightBoard(rows, cols);
+    board[row][col] = 1;
+    int[] temp = canPlaceAnother(row, col);
+    //System.out.println(Driver.printArray(temp));
+    //return solveH(temp[0], temp[1], 2, brd);
+    return solveH(row, col, 1);
   }
 
   public int countSolutions(int row, int col) {
@@ -39,19 +44,22 @@ public class KnightBoard{
   }
 
   public boolean solveH(int row, int col, int num) { //private
-    if (num==row*col) return true;
+    if (num==rows*cols+1) return true;
     for (int x = row; x < rows; x++) {
       for (int y = col; y < cols; y++) {
         board[x][y] = num;
         int[] temp = canPlaceAnother(x, y);
-        if(!empty(temp)) return solveH(temp[0], temp[1], num+1);
+        // System.out.println(Driver.printArray(temp));
+        // System.out.println(brd);
+        if(temp[0]==1) return solveH(temp[1], temp[2], num+1);
+        board[x][y] = -2;
       }
     }
     return false;
   }
 
   public int[] canPlaceAnother(int x, int y){ //private
-    int[] output = new int[2];
+    int[] output = new int[3];
     for(int x1 = 0; x1 < rows; x1++){
       for(int y1 = 0; y1 < cols; y1++) {
         //System.out.println(board[x1][y1]);
@@ -61,8 +69,9 @@ public class KnightBoard{
             (Math.abs(x-x1)==2&&Math.abs(y-y1)==1))
             {
               //System.out.println("B");
-              output[0] = x1;
-              output[1] = y1;
+              output[0] = 1; //true
+              output[1] = x1;
+              output[2] = y1;
               return output;
             }
         }
@@ -73,11 +82,11 @@ public class KnightBoard{
 
   public boolean removeKnight(int row, int col, int num){return true;} //private
 
-  public boolean empty(int[] input) { //private
-    for(int x = 0; x < input.length; x++){
-      if(input[x]!=0) return true;
-    }
-    return false;
-  }
+  // public boolean empty(int[] input) { //private
+  //   for(int x = 0; x < input.length; x++){
+  //     if(input[x]!=0) return true;
+  //   }
+  //   return false;
+  // }
 
 }
