@@ -2,7 +2,7 @@ import java.*;
 
 public class KnightBoard{
 
-  private int[][] board;
+  public int[][] board; //private
   private int rows;
   private int cols;
 
@@ -12,7 +12,7 @@ public class KnightBoard{
     board = new int[rows][cols];
     for (int x = 0; x < rows; x++) {
       for (int y = 0; y < cols; y++) {
-        board[x][y] = -1;
+        board[x][y] = 0;
       }
     }
   }
@@ -21,8 +21,8 @@ public class KnightBoard{
     String output = "";
     for (int x = 0; x < rows; x++) {
       for (int y = 0; y < cols; y++) {
-        if (board[x][y] < 0) output+="  0";
-        else if (board[x][y] / 10 == 0) output+= ("  " + board[x][y]);
+        if (board[x][y] <= 0) output+="  0";
+        else if (board[x][y]<10) output+= ("  " + board[x][y]);
         else output += " " + board[x][y];
       }
       output+="\n";
@@ -42,7 +42,7 @@ public class KnightBoard{
     if (num==row*col) return true;
     for (int x = row; x < rows; x++) {
       for (int y = col; y < cols; y++) {
-        placeKnight(x, y, num);
+        board[x][y] = num;
         int[] temp = canPlaceAnother(x, y);
         if(!empty(temp)) return solveH(temp[0], temp[1], num+1);
       }
@@ -50,19 +50,17 @@ public class KnightBoard{
     return false;
   }
 
-  public boolean placeKnight(int row, int col, int num) { //private
-    board[row][col] = num;
-    return true;
-  }
-
   public int[] canPlaceAnother(int x, int y){ //private
     int[] output = new int[2];
-    for(int x1 = 0; x < rows; x++){
-      for(int y1 = 0; y < cols; y++) {
-        if(board[x1][y1]==-1) {
+    for(int x1 = 0; x1 < rows; x1++){
+      for(int y1 = 0; y1 < cols; y1++) {
+        //System.out.println(board[x1][y1]);
+        if(board[x1][y1]==0) {
+          //System.out.println("A");
           if ((Math.abs(x-x1)==1&&Math.abs(y-y1)==2)||
-            (Math.abs(x-x1)==2&&Math.abs(x-x1)==1))
+            (Math.abs(x-x1)==2&&Math.abs(y-y1)==1))
             {
+              //System.out.println("B");
               output[0] = x1;
               output[1] = y1;
               return output;
