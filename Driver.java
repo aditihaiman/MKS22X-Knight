@@ -12,7 +12,7 @@ public class Driver {
     //System.out.println(printArray(board1.canPlaceAnother(1, 2)));
 
     board1 = new KnightBoard(5, 6);
-    System.out.println(board1.solve(1,0));
+    System.out.println(board1.solve(0,0));
     System.out.println(board1);
 
     // int[] test = new int[5];

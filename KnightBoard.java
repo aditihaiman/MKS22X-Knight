@@ -15,6 +15,7 @@ public class KnightBoard{
         board[x][y] = 0;
       }
     }
+
   }
 
   public String toString() {
@@ -44,6 +45,8 @@ public class KnightBoard{
   }
 
   public boolean solveH(int row, int col, int num) { //private
+    int[] xMoves = {1, 1, -1, -1, 2, 2, -2, -2};
+    int[] yMoves = {2, -2, 2, -2, 1, -1, 1, -1};
     if (num==rows*cols+1) return true;
     for (int x = row; x < rows; x++) {
       for (int y = col; y < cols; y++) {
@@ -57,6 +60,18 @@ public class KnightBoard{
     }
     return false;
   }
+
+  // public boolean check(int x, int y) {
+  //   if(board[x][y]==nums-1) {
+  //     //System.out.println("A");
+  //     if ((Math.abs(x-x1)==1&&Math.abs(y-y1)==2)||
+  //       (Math.abs(x-x1)==2&&Math.abs(y-y1)==1))
+  //       {
+  //         return true;
+  //       }
+  //       return false;
+  // }
+
 
   public int[] canPlaceAnother(int x, int y){ //private
     int[] output = new int[3];
