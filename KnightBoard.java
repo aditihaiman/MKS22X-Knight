@@ -35,7 +35,7 @@ public class KnightBoard{
     board[row][col] = 1;
     //System.out.println(Driver.printArray(temp));
     //return solveH(temp[0], temp[1], 2, brd);
-    return solveH(row, col, 1);
+    return solveH(row, col, 2);
   }
 
   public int countSolutions(int row, int col) {
