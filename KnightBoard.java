@@ -41,7 +41,8 @@ public class KnightBoard{
   public int countSolutions(int row, int col) {
     if (!empty()) throw new IllegalStateException();
     if (row < 0 || col < 0 || row >= rows || col >= cols) throw new IllegalArgumentException();
-    return 0;
+    board[row][col] = 1;
+    return countH(row, col, 2);
   }
 
 
@@ -69,10 +70,10 @@ public class KnightBoard{
     for(int a = 0; a < 8; a++) {
       if (check(row+xMoves[a], col+yMoves[a])) {
         board[row+xMoves[a]][col+yMoves[a]] = num;
-        return sum + (countH(row+xMoves[a], col+yMoves[a], num+1));
+        sum += countH(row+xMoves[a], col+yMoves[a], num+1);
       }
     }
-    return 0;
+    return sum;
   }
 
 
