@@ -48,29 +48,29 @@ public class KnightBoard{
     int[] xMoves = {1, 1, -1, -1, 2, 2, -2, -2};
     int[] yMoves = {2, -2, 2, -2, 1, -1, 1, -1};
     if (num==rows*cols+1) return true;
-    for (int x = row; x < rows; x++) {
-      for (int y = col; y < cols; y++) {
-        board[x][y] = num;
-        int[] temp = canPlaceAnother(x, y);
-        // System.out.println(Driver.printArray(temp));
-        // System.out.println(brd);
-        if(temp[0]==1) return solveH(temp[1], temp[2], num+1);
-        board[x][y] = -2;
+
+    for(int a = 0; a < 8; a++) {
+      if (check(row+xMoves[a], col+yMoves[a])) {
+        board[row+xMoves[a]][col+yMoves[a]] = num + 1;
+        if (solveH(row+xMoves[a], col+yMoves[a], num+1)) return true;
       }
     }
+    // for (int x = row; x < rows; x++) {
+    //   for (int y = col; y < cols; y++) {
+    //     board[x][y] = num;
+    //     int[] temp = canPlaceAnother(x, y);
+    //     // System.out.println(Driver.printArray(temp));
+    //     // System.out.println(brd);
+    //     if(temp[0]==1) return solveH(temp[1], temp[2], num+1);
+    //     board[x][y] = -2;
+    //   }
+    // }
     return false;
   }
 
-  // public boolean check(int x, int y) {
-  //   if(board[x][y]==nums-1) {
-  //     //System.out.println("A");
-  //     if ((Math.abs(x-x1)==1&&Math.abs(y-y1)==2)||
-  //       (Math.abs(x-x1)==2&&Math.abs(y-y1)==1))
-  //       {
-  //         return true;
-  //       }
-  //       return false;
-  // }
+  public boolean check(int x, int y) {
+    return (x < rows && y < cols && board[x][y]==0);
+  }
 
 
   public int[] canPlaceAnother(int x, int y){ //private
