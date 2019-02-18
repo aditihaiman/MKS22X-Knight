@@ -14,6 +14,13 @@ public class Driver {
     board1 = new KnightBoard(5, 6);
     System.out.println(board1.solve(0,0));
     System.out.println(board1);
+    board1 = new KnightBoard(5, 6);
+    System.out.println(board1.solve(4,3));
+    System.out.println(board1);
+
+    board1 = new KnightBoard(8, 7);
+    System.out.println(board1.solve(0,0));
+    System.out.println(board1);
 
     // int[] test = new int[5];
     // System.out.println(test[4]==0);

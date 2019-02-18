@@ -22,8 +22,8 @@ public class KnightBoard{
     String output = "";
     for (int x = 0; x < rows; x++) {
       for (int y = 0; y < cols; y++) {
-        if (board[x][y] <= 0) output+="  0";
-        else if (board[x][y]<10) output+= ("  " + board[x][y]);
+        //if (board[x][y] <= 0) output+="  0";
+        if (board[x][y]<10) output+= ("  " + board[x][y]);
         else output += " " + board[x][y];
       }
       output+="\n";
@@ -39,8 +39,13 @@ public class KnightBoard{
   }
 
   public int countSolutions(int row, int col) {
+    if (!empty()) throw new IllegalStateException();
+    if (row < 0 || col < 0 || row >= rows || col >= cols) throw new IllegalArgumentException();
     return 0;
   }
+
+
+//--------------- Helper Methods ----------------//
 
   public boolean solveH(int row, int col, int num) { //private
     int[] xMoves = {1, 1, -1, -1, 2, 2, -2, -2};
@@ -50,11 +55,26 @@ public class KnightBoard{
       if (check(row+xMoves[a], col+yMoves[a])) {
         board[row+xMoves[a]][col+yMoves[a]] = num;
         if (solveH(row+xMoves[a], col+yMoves[a], num+1)) return true;
-        else board[row+xMoves[a]][col+yMoves[a]] = 0;
+        board[row+xMoves[a]][col+yMoves[a]] = 0;
       }
     }
     return false;
   }
+
+  public int countH(int row, int col, int num) { //private
+    int[] xMoves = {1, 1, -1, -1, 2, 2, -2, -2};
+    int[] yMoves = {2, -2, 2, -2, 1, -1, 1, -1};
+    if (num==rows*cols+1) return 1;
+    int sum = 0;
+    for(int a = 0; a < 8; a++) {
+      if (check(row+xMoves[a], col+yMoves[a])) {
+        board[row+xMoves[a]][col+yMoves[a]] = num;
+        return sum + (countH(row+xMoves[a], col+yMoves[a], num+1));
+      }
+    }
+    return 0;
+  }
+
 
   public boolean check(int x, int y) {
     return (x>=0 && y >=0 && x < rows && y < cols && board[x][y]==0);
