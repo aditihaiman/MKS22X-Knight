@@ -32,9 +32,7 @@ public class KnightBoard{
   }
 
   public boolean solve(int row, int col) {
-    KnightBoard brd = new KnightBoard(rows, cols);
     board[row][col] = 1;
-    int[] temp = canPlaceAnother(row, col);
     //System.out.println(Driver.printArray(temp));
     //return solveH(temp[0], temp[1], 2, brd);
     return solveH(row, col, 1);
@@ -48,11 +46,11 @@ public class KnightBoard{
     int[] xMoves = {1, 1, -1, -1, 2, 2, -2, -2};
     int[] yMoves = {2, -2, 2, -2, 1, -1, 1, -1};
     if (num==rows*cols+1) return true;
-
     for(int a = 0; a < 8; a++) {
       if (check(row+xMoves[a], col+yMoves[a])) {
-        board[row+xMoves[a]][col+yMoves[a]] = num + 1;
+        board[row+xMoves[a]][col+yMoves[a]] = num;
         if (solveH(row+xMoves[a], col+yMoves[a], num+1)) return true;
+        else board[row+xMoves[a]][col+yMoves[a]] = 0;
       }
     }
     // for (int x = row; x < rows; x++) {
@@ -69,7 +67,7 @@ public class KnightBoard{
   }
 
   public boolean check(int x, int y) {
-    return (x < rows && y < cols && board[x][y]==0);
+    return (x>=0 && y >=0 && x < rows && y < cols && board[x][y]==0);
   }
 
 
