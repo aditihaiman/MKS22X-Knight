@@ -51,20 +51,38 @@ public class KnightBoard{
 
 //--------------- Optimization ------------------//
 
-  public boolean solveH2(int row, int col, int num) {
-    return true;
+  public boolean solveH2(int row, int col, int level) {
+    int[] xMoves = {1, 1, -1, -1, 2, 2, -2, -2};
+    int[] yMoves = {2, -2, 2, -2, 1, -1, 1, -1};
+    if (level==rows*cols+1) return true;
+    for (int a = 0; a < 8; a++) {
+      updateMoves(moves, level);  //may need to be level - 1
+      if(moves[row][col]!=0) {
+        int[] temp = getMove(moves, row, col, xMoves, yMoves);
+        if (solveH2(temp[0], temp[1], level+1)) return true;
+
+      }
+    }
+    return false;
   }
 
 
 //--------------- Helper Methods ----------------//
 
+  public void updateMoves(int[][]data, int level) {
+    for (int x = 0; x < rows; x++) {
+      for (int y = 0; y < cols; y++) {
+        numMoves(moves, x, y, level);
+      }
+    }
+  }
 
-  private void numMoves(int[][] data, int x, int y){
+  private void numMoves(int[][] data, int x, int y, int level){
     int[] xMoves = {1, 1, -1, -1, 2, 2, -2, -2};
     int[] yMoves = {2, -2, 2, -2, 1, -1, 1, -1};
     int num = 0;
     for(int a = 0; a < 8; a++) {
-      if (check(x+xMoves[a], y+yMoves[a])) {
+      if (check(x+xMoves[a], y+yMoves[a]) && board[x+xMoves[a]][y+yMoves[a]]!=level) {
         num++;
       }
     }
