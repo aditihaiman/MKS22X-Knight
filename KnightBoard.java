@@ -1,18 +1,22 @@
-import java.*;
+import java.util.*;
+import java.io.*;
 
 public class KnightBoard{
 
   public int[][] board; //private
   private int rows;
   private int cols;
+  public int[][] moves;
 
   public KnightBoard(int row, int col) {
     rows = row;
     cols = col;
     board = new int[rows][cols];
+    moves = new int[row][cols];
     for (int x = 0; x < rows; x++) {
       for (int y = 0; y < cols; y++) {
         board[x][y] = 0;
+        numMoves(moves, x, y);
       }
     }
 
@@ -44,7 +48,7 @@ public class KnightBoard{
     board[row][col] = 1;
     return countH(row, col, 2);
   }
-  
+
 //--------------- Optimization ------------------//
 
   public boolean solveH2(int row, int col, int num) {
@@ -53,6 +57,33 @@ public class KnightBoard{
 
 
 //--------------- Helper Methods ----------------//
+
+
+  private void numMoves(int[][] data, int x, int y){
+    int[] xMoves = {1, 1, -1, -1, 2, 2, -2, -2};
+    int[] yMoves = {2, -2, 2, -2, 1, -1, 1, -1};
+    int num = 0;
+    for(int a = 0; a < 8; a++) {
+      if (check(x+xMoves[a], y+yMoves[a])) {
+        num++;
+      }
+    }
+    data[x][y] = num;
+  }
+
+  private int[] getMove(int[][] moves, int x, int y, int[] xMoves, int[] yMoves) {
+    int[] output = new int[2];
+    int min = rows*cols;
+    for(int a = 0; a < 8; a++) {
+      if (check(x+xMoves[a], y+yMoves[a])) { //if coordinates are a valid move, tries to find minimum
+        if(moves[x+xMoves[a]][y+yMoves[a]] < min) {
+          output[0] = x+xMoves[a];
+          output[1] = y+yMoves[a];
+        }
+      }
+    }
+    return output;
+  }
 
   public boolean solveH(int row, int col, int num) { //private
     int[] xMoves = {1, 1, -1, -1, 2, 2, -2, -2};
@@ -89,7 +120,7 @@ public class KnightBoard{
   }
 
 
-  public boolean check(int x, int y) {
+  public boolean check(int x, int y) { //private
     return (x>=0 && y >=0 && x < rows && y < cols && board[x][y]==0);
   }
 
