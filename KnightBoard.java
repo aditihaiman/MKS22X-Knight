@@ -65,14 +65,19 @@ public class KnightBoard{
   public int countH(int row, int col, int num) { //private
     int[] xMoves = {1, 1, -1, -1, 2, 2, -2, -2};
     int[] yMoves = {2, -2, 2, -2, 1, -1, 1, -1};
-    if (num==rows*cols+1) return 1;
+    if (num==rows*cols+1) {
+      System.out.println("A");
+      return 1;
+    }
     int sum = 0;
     for(int a = 0; a < 8; a++) {
       if (check(row+xMoves[a], col+yMoves[a])) {
         board[row+xMoves[a]][col+yMoves[a]] = num;
         sum += countH(row+xMoves[a], col+yMoves[a], num+1);
+        System.out.println("C");
       }
     }
+    System.out.println("B");
     return sum;
   }
 
