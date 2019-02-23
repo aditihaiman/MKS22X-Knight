@@ -66,7 +66,7 @@ public class KnightBoard{
     int[] xMoves = {1, 1, -1, -1, 2, 2, -2, -2};
     int[] yMoves = {2, -2, 2, -2, 1, -1, 1, -1};
     if (num==rows*cols+1) {
-      System.out.println("A");
+      //System.out.println("A");
       return 1;
     }
     int sum = 0;
@@ -74,10 +74,11 @@ public class KnightBoard{
       if (check(row+xMoves[a], col+yMoves[a])) {
         board[row+xMoves[a]][col+yMoves[a]] = num;
         sum += countH(row+xMoves[a], col+yMoves[a], num+1);
-        System.out.println("C");
+        board[row+xMoves[a]][col+yMoves[a]] = 0;
+        //System.out.println("B");
       }
     }
-    System.out.println("B");
+    //System.out.println("C");
     return sum;
   }
 

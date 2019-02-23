@@ -10,11 +10,15 @@ public class Driver {
     // board1.board[1][2]=4;
     //System.out.println(board1);
     //System.out.println(printArray(board1.canPlaceAnother(1, 2)));
+    board1 = new KnightBoard(1, 1);
+    System.out.println("1x1: " + board1.countSolutions(0,0));
+    board1 = new KnightBoard(4, 5);
+    System.out.println("4x5: " + board1.countSolutions(0,0));
+    board1 = new KnightBoard(5, 5);
+    System.out.println("5x5: " + board1.countSolutions(0,0));
+    board1 = new KnightBoard(5, 6);
+    System.out.println("5x6: " + board1.countSolutions(0,0));
 
-    board1 = new KnightBoard(5, 6);
-    System.out.println(board1.countSolutions(0,0));
-    System.out.println(board1);
-    board1 = new KnightBoard(5, 6);
     // System.out.println(board1.solve(4,3));
     // System.out.println(board1);
 
