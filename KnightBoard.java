@@ -44,6 +44,12 @@ public class KnightBoard{
     board[row][col] = 1;
     return countH(row, col, 2);
   }
+  
+//--------------- Optimization ------------------//
+
+  public boolean solveH2(int row, int col, int num) {
+    return true;
+  }
 
 
 //--------------- Helper Methods ----------------//
