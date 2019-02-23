@@ -7,7 +7,7 @@ public class Driver {
     KnightBoard board1 = new KnightBoard(5, 6);
     //System.out.println(board1);
 
-
+//testing solve without optimization
     board1 = new KnightBoard(1, 1);
     System.out.println("1x1: " + board1.countSolutions(0,0));
     board1 = new KnightBoard(4, 5);
@@ -17,7 +17,22 @@ public class Driver {
     board1 = new KnightBoard(5, 6);
     //System.out.println("5x6: " + board1.countSolutions(0,0));
 
+
+/* testing optimization
+
+    System.out.println(board1);
+    System.out.println(printArray(board1.moves) + "\n");
+    board1.board[0][0] = 1;
+    System.out.println(board1);
+    board1.updateMoves(board1.moves);
     System.out.println(printArray(board1.moves));
+    board1.board[2][1] = 2;
+    System.out.println(board1);
+    board1.updateMoves(board1.moves);
+    System.out.println(printArray(board1.moves));
+*/
+
+
 
 
   }
