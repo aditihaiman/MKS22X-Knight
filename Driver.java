@@ -14,7 +14,7 @@ public class Driver {
     //System.out.println("4x5: " + board1.countSolutions(0,0));
     board1 = new KnightBoard(5, 5);
     //System.out.println("5x5: " + board1.countSolutions(0,0));
-    board1 = new KnightBoard(3, 3);
+    board1 = new KnightBoard(3, 9);
     System.out.println(board1.solve(0,0));
     System.out.println(board1);
     //System.out.println("5x6: " + board1.countSolutions(0,0));
