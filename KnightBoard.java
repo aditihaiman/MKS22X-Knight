@@ -35,7 +35,7 @@ public class KnightBoard{
     return output;
   }
 
-  public boolean solve(int row, int col) {
+  public boolean solveSlow(int row, int col) {
     if (!empty()) throw new IllegalStateException();
     if (row < 0 || col < 0 || row >= rows || col >= cols) throw new IllegalArgumentException();
     board[row][col] = 1;
@@ -50,7 +50,7 @@ public class KnightBoard{
   }
 
 
-  public boolean solveOpt(int row, int col) {
+  public boolean solve(int row, int col) {
     if (!empty()) throw new IllegalStateException();
     if (row < 0 || col < 0 || row >= rows || col >= cols) throw new IllegalArgumentException();
     board[row][col] = 1;
@@ -108,40 +108,40 @@ public class KnightBoard{
     return num;
   }
 
-  public void updateMoves(int[][]data, int level) {
-    for (int x = 0; x < rows; x++) {
-      for (int y = 0; y < cols; y++) {
-        numMoves(moves, x, y, level);
-      }
-    }
-  }
-
-  private void numMoves(int[][] data, int x, int y, int level){
-    int[] xMoves = {1, 1, -1, -1, 2, 2, -2, -2};
-    int[] yMoves = {2, -2, 2, -2, 1, -1, 1, -1};
-    int num = 0;
-    for(int a = 0; a < 8; a++) {
-      if (check(x+xMoves[a], y+yMoves[a]) && board[x+xMoves[a]][y+yMoves[a]]!=level) {
-        num++;
-      }
-    }
-    data[x][y] = num;
-  }
-
-  private int[] getMove(int[][] moves, int x, int y, int[] xMoves, int[] yMoves) {
-    int[] output = new int[2];
-    int min = rows*cols;
-    for(int a = 0; a < 8; a++) {
-      if (check(x+xMoves[a], y+yMoves[a])) { //if coordinates are a valid move, tries to find minimum
-        if(moves[x+xMoves[a]][y+yMoves[a]] < min) {
-          min = moves[x+xMoves[a]][y+yMoves[a]];
-          output[0] = x+xMoves[a];
-          output[1] = y+yMoves[a];
-        }
-      }
-    }
-    return output;
-  }
+  // public void updateMoves(int[][]data, int level) {
+  //   for (int x = 0; x < rows; x++) {
+  //     for (int y = 0; y < cols; y++) {
+  //       numMoves(moves, x, y, level);
+  //     }
+  //   }
+  // }
+  //
+  // private void numMoves(int[][] data, int x, int y, int level){
+  //   int[] xMoves = {1, 1, -1, -1, 2, 2, -2, -2};
+  //   int[] yMoves = {2, -2, 2, -2, 1, -1, 1, -1};
+  //   int num = 0;
+  //   for(int a = 0; a < 8; a++) {
+  //     if (check(x+xMoves[a], y+yMoves[a]) && board[x+xMoves[a]][y+yMoves[a]]!=level) {
+  //       num++;
+  //     }
+  //   }
+  //   data[x][y] = num;
+  // }
+  //
+  // private int[] getMove(int[][] moves, int x, int y, int[] xMoves, int[] yMoves) {
+  //   int[] output = new int[2];
+  //   int min = rows*cols;
+  //   for(int a = 0; a < 8; a++) {
+  //     if (check(x+xMoves[a], y+yMoves[a])) { //if coordinates are a valid move, tries to find minimum
+  //       if(moves[x+xMoves[a]][y+yMoves[a]] < min) {
+  //         min = moves[x+xMoves[a]][y+yMoves[a]];
+  //         output[0] = x+xMoves[a];
+  //         output[1] = y+yMoves[a];
+  //       }
+  //     }
+  //   }
+  //   return output;
+  // }
 
   public boolean solveH(int row, int col, int num) { //private
     int[] xMoves = {1, 1, -1, -1, 2, 2, -2, -2};
