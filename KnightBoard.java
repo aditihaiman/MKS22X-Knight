@@ -16,7 +16,7 @@ public class KnightBoard{
     for (int x = 0; x < rows; x++) {
       for (int y = 0; y < cols; y++) {
         board[x][y] = 0;
-        numMoves(moves, x, y);
+        numMoves(moves, x, y, 1);
       }
     }
 
@@ -49,6 +49,14 @@ public class KnightBoard{
     return countH(row, col, 2);
   }
 
+
+  public boolean solveOpt(int row, int col) {
+    if (!empty()) throw new IllegalStateException();
+    if (row < 0 || col < 0 || row >= rows || col >= cols) throw new IllegalArgumentException();
+    board[row][col] = 1;
+    return solveH2(row, col, 2);
+  }
+
 //--------------- Optimization ------------------//
 
   public boolean solveH2(int row, int col, int level) {
@@ -56,10 +64,16 @@ public class KnightBoard{
     int[] yMoves = {2, -2, 2, -2, 1, -1, 1, -1};
     if (level==rows*cols+1) return true;
     for (int a = 0; a < 8; a++) {
-      updateMoves(moves, level);  //may need to be level - 1
-      if(moves[row][col]!=0) {
-        int[] temp = getMove(moves, row, col, xMoves, yMoves);
-        if (solveH2(temp[0], temp[1], level+1)) return true;
+      //updateMoves(moves, level-1);  //may need to be level - 1
+      if(getnumMoves(row, col, xMoves, yMoves)!=0) {
+        //System.out.println("A");
+        board[row][col] = level;
+        int[] temp = getMoves(row, col, xMoves, yMoves);
+        if (solveH2(temp[0], temp[1], level+1)) {
+          System.out.println("B");
+          return true;
+        }
+        board[row][col] = 0;
 
       }
     }
@@ -68,6 +82,30 @@ public class KnightBoard{
 
 
 //--------------- Helper Methods ----------------//
+
+  public int[] getMoves(int x, int y, int[] xMoves, int[] yMoves) {
+    int[] output = new int[2];
+    int min = rows*cols;
+    for(int a = 0; a < 8; a++) {
+      if(check(x+xMoves[a], y+yMoves[a])) {
+        int temp = getnumMoves(x+xMoves[a], y+yMoves[y], xMoves, yMoves);
+        if(temp < min){
+          min = temp;
+          output[0] = x+xMoves[a];
+          output[1] = y+yMoves[a];
+        }
+      }
+    }
+    return output;
+  }
+
+  public int getnumMoves(int x, int y, int[] xMoves, int[] yMoves){
+    int num = 0;
+    for(int a = 0; a<8; a++) {
+      if (check(x+xMoves[a], y+yMoves[a])) num++;
+    }
+    return num;
+  }
 
   public void updateMoves(int[][]data, int level) {
     for (int x = 0; x < rows; x++) {
@@ -95,6 +133,7 @@ public class KnightBoard{
     for(int a = 0; a < 8; a++) {
       if (check(x+xMoves[a], y+yMoves[a])) { //if coordinates are a valid move, tries to find minimum
         if(moves[x+xMoves[a]][y+yMoves[a]] < min) {
+          min = moves[x+xMoves[a]][y+yMoves[a]];
           output[0] = x+xMoves[a];
           output[1] = y+yMoves[a];
         }
