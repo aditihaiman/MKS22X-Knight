@@ -6,17 +6,17 @@ public class KnightBoard{
   public int[][] board; //private
   private int rows;
   private int cols;
-  public int[][] moves;
+  //public int[][] moves;
 
   public KnightBoard(int row, int col) {
     rows = row;
     cols = col;
     board = new int[rows][cols];
-    moves = new int[row][cols];
+    //moves = new int[row][cols];
     for (int x = 0; x < rows; x++) {
       for (int y = 0; y < cols; y++) {
         board[x][y] = 0;
-        numMoves(moves, x, y, 1);
+        //numMoves(moves, x, y, 1);
       }
     }
 
@@ -64,18 +64,17 @@ public class KnightBoard{
     int[] yMoves = {2, -2, 2, -2, 1, -1, 1, -1};
     if (level==rows*cols+1) return true;
     for (int a = 0; a < 8; a++) {
-      //updateMoves(moves, level-1);  //may need to be level - 1
-      if(getnumMoves(row, col, xMoves, yMoves)!=0) {
-        //System.out.println("A");
-        board[row][col] = level;
-        int[] temp = getMoves(row, col, xMoves, yMoves);
-        if (solveH2(temp[0], temp[1], level+1)) {
-          System.out.println("B");
+      //System.out.println("A");
+      int[] temp = getMoves(row, col, xMoves, yMoves);
+      if(temp[0]==1) {
+        board[temp[1]][temp[2]] = level;
+        //System.out.println(temp[1] + " ; " + temp[2]);
+        if (solveH2(temp[1], temp[2], level+1)) {
+          //System.out.println("B");
           return true;
         }
-        board[row][col] = 0;
-
       }
+      //else board[row][col] = 0;
     }
     return false;
   }
@@ -84,15 +83,17 @@ public class KnightBoard{
 //--------------- Helper Methods ----------------//
 
   public int[] getMoves(int x, int y, int[] xMoves, int[] yMoves) {
-    int[] output = new int[2];
+    int[] output = new int[3];
     int min = rows*cols;
     for(int a = 0; a < 8; a++) {
       if(check(x+xMoves[a], y+yMoves[a])) {
-        int temp = getnumMoves(x+xMoves[a], y+yMoves[y], xMoves, yMoves);
+        int temp = getnumMoves(x+xMoves[a], y+yMoves[a], xMoves, yMoves);
         if(temp < min){
+          //System.out.println("C");
           min = temp;
-          output[0] = x+xMoves[a];
-          output[1] = y+yMoves[a];
+          output[0] = 1;
+          output[1] = x+xMoves[a];
+          output[2] = y+yMoves[a];
         }
       }
     }
