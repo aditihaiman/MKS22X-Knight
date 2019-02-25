@@ -3,17 +3,16 @@ import java.io.*;
 
 public class KnightBoard{
 
-  public int[][] board; //private
+  private int[][] board;
   private int rows;
   private int cols;
-  //public int[][] moves;
 
   public KnightBoard(int row, int col) {
     rows = row;
     cols = col;
     board = new int[rows][cols];
     //moves = new int[row][cols];
-    for (int x = 0; x < rows; x++) {
+    for (int x = 0; x < rows; x++) { //initialize board with all zeroes
       for (int y = 0; y < cols; y++) {
         board[x][y] = 0;
         //numMoves(moves, x, y, 1);
@@ -35,7 +34,7 @@ public class KnightBoard{
     return output;
   }
 
-  public boolean solveSlow(int row, int col) {
+  public boolean solveSlow(int row, int col) { //solving without optimization
     if (!empty()) throw new IllegalStateException();
     if (row < 0 || col < 0 || row >= rows || col >= cols) throw new IllegalArgumentException();
     board[row][col] = 1;
@@ -50,7 +49,7 @@ public class KnightBoard{
   }
 
 
-  public boolean solve(int row, int col) {
+  public boolean solve(int row, int col) { //solve with optimization
     if (!empty()) throw new IllegalStateException();
     if (row < 0 || col < 0 || row >= rows || col >= cols) throw new IllegalArgumentException();
     board[row][col] = 1;
@@ -59,7 +58,7 @@ public class KnightBoard{
 
 //--------------- Optimization ------------------//
 
-  public boolean solveH2(int row, int col, int level) {
+  private boolean solveH2(int row, int col, int level) {
     int[] xMoves = {1, 1, -1, -1, 2, 2, -2, -2};
     int[] yMoves = {2, -2, 2, -2, 1, -1, 1, -1};
     if (level==rows*cols+1) return true;
@@ -82,7 +81,8 @@ public class KnightBoard{
 
 //--------------- Helper Methods ----------------//
 
-  public int[] getMoves(int x, int y, int[] xMoves, int[] yMoves) {
+//method that returns an array that gives the coordinates for the next move if a move is possible
+  private int[] getMoves(int x, int y, int[] xMoves, int[] yMoves) {
     int[] output = new int[3];
     int min = rows*cols;
     for(int a = 0; a < 8; a++) {
@@ -91,7 +91,7 @@ public class KnightBoard{
         if(temp < min){
           //System.out.println("C");
           min = temp;
-          output[0] = 1;
+          output[0] = 1; //next move is possible when output[0] = 1
           output[1] = x+xMoves[a];
           output[2] = y+yMoves[a];
         }
@@ -100,7 +100,8 @@ public class KnightBoard{
     return output;
   }
 
-  public int getnumMoves(int x, int y, int[] xMoves, int[] yMoves){
+//returns the number of moves possible from a certain position on the board
+  private int getnumMoves(int x, int y, int[] xMoves, int[] yMoves){
     int num = 0;
     for(int a = 0; a<8; a++) {
       if (check(x+xMoves[a], y+yMoves[a])) num++;
@@ -108,42 +109,7 @@ public class KnightBoard{
     return num;
   }
 
-  // public void updateMoves(int[][]data, int level) {
-  //   for (int x = 0; x < rows; x++) {
-  //     for (int y = 0; y < cols; y++) {
-  //       numMoves(moves, x, y, level);
-  //     }
-  //   }
-  // }
-  //
-  // private void numMoves(int[][] data, int x, int y, int level){
-  //   int[] xMoves = {1, 1, -1, -1, 2, 2, -2, -2};
-  //   int[] yMoves = {2, -2, 2, -2, 1, -1, 1, -1};
-  //   int num = 0;
-  //   for(int a = 0; a < 8; a++) {
-  //     if (check(x+xMoves[a], y+yMoves[a]) && board[x+xMoves[a]][y+yMoves[a]]!=level) {
-  //       num++;
-  //     }
-  //   }
-  //   data[x][y] = num;
-  // }
-  //
-  // private int[] getMove(int[][] moves, int x, int y, int[] xMoves, int[] yMoves) {
-  //   int[] output = new int[2];
-  //   int min = rows*cols;
-  //   for(int a = 0; a < 8; a++) {
-  //     if (check(x+xMoves[a], y+yMoves[a])) { //if coordinates are a valid move, tries to find minimum
-  //       if(moves[x+xMoves[a]][y+yMoves[a]] < min) {
-  //         min = moves[x+xMoves[a]][y+yMoves[a]];
-  //         output[0] = x+xMoves[a];
-  //         output[1] = y+yMoves[a];
-  //       }
-  //     }
-  //   }
-  //   return output;
-  // }
-
-  public boolean solveH(int row, int col, int num) { //private
+  private boolean solveH(int row, int col, int num) { //private
     int[] xMoves = {1, 1, -1, -1, 2, 2, -2, -2};
     int[] yMoves = {2, -2, 2, -2, 1, -1, 1, -1};
     if (num==rows*cols+1) return true;
@@ -157,7 +123,7 @@ public class KnightBoard{
     return false;
   }
 
-  public int countH(int row, int col, int num) { //private
+  private int countH(int row, int col, int num) { //private
     int[] xMoves = {1, 1, -1, -1, 2, 2, -2, -2};
     int[] yMoves = {2, -2, 2, -2, 1, -1, 1, -1};
     if (num==rows*cols+1) {
@@ -178,12 +144,12 @@ public class KnightBoard{
   }
 
 
-  public boolean check(int x, int y) { //private
+  private boolean check(int x, int y) { //private
     return (x>=0 && y >=0 && x < rows && y < cols && board[x][y]==0);
   }
 
 
-  public boolean empty() { //private
+  private boolean empty() { //private
     for(int x = 0; x < rows; x++){
       for (int y = 0; y < cols; y++) {
         if(board[x][y]!=0) return false;
